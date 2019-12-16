@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Photo Album Search</title>
+     <link rel="stylesheet" href="assets/css/normalize.css">
+        <link rel="stylesheet" href="assets/css/font-awesome.min.css">
+        <link rel="stylesheet" href="assets/css/fontello.css">
+        <link href="assets/fonts/icon-7-stroke/css/pe-icon-7-stroke.css" rel="stylesheet">
+        <link href="assets/fonts/icon-7-stroke/css/helper.css" rel="stylesheet">
+        <link href="assets/css/animate.css" rel="stylesheet" media="screen">
+        <link rel="stylesheet" href="assets/css/bootstrap-select.min.css"> 
+        <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="assets/css/icheck.min_all.css">
+        <link rel="stylesheet" href="assets/css/price-range.css">
+        <link rel="stylesheet" href="assets/css/owl.carousel.css">  
+        <link rel="stylesheet" href="assets/css/owl.theme.css">
+        <link rel="stylesheet" href="assets/css/owl.transitions.css">
+        <link rel="stylesheet" href="assets/css/lightslider.min.css">
+        <link rel="stylesheet" href="assets/css/style.css">
+        <link rel="stylesheet" href="assets/css/responsive.css">
+    <style type="text/css">
+/* Split the screen in half */
+
+.split {
+  height: 100%;
+  width: 50%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  overflow-x: hidden;
+  padding-top: 5px;
+}
+#map_canvas {
+  width: 100%; height: 450px;
+  margin-top: 10px;
+}
+/* Control the left side */
+.left {
+  left: 0;
+}
+
+/* Control the right side */
+.right {
+  right: 0;
+
+  /*background-color: red;*/
+}
+
+/* If you want the content centered horizontally and vertically */
+.centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+}
+
+/* Style the image inside the centered container, if needed */
+
+ .talk_con{
+            width:500px;
+            height:500px;
+            border:2px solid #666;
+            margin:50px auto 0;
+            background:#f9f9f9;
+            /*background-color:transparent;*/
+        }
+        .talk_show{
+            width:480px;
+            height:420px;
+            border:2px solid #666;
+            background:#f9f9f9;
+            margin:10px auto 0;
+            overflow:auto;
+
+        }
+        .talk_input{
+            width:420px;
+            margin:10px auto 0;
+        }
+        .whotalk{
+            width:80px;
+            height:30px;
+            float:left;
+            outline:none;
+        }
+        .talk_word{
+            width:300px;
+            height:26px;
+            padding:0px;
+            float:left;
+            margin-left:10px;
+            outline:none;
+            text-indent:10px;
+        }        
+        .talk_sub{
+            width:56px;
+            height:40px;
+            float:left;
+            margin-left:10px;
+        }
+        .atalk{
+           margin:10px; 
+        }
+        .atalk span{
+            display:inline-block;
+            background:#4DC86F;
+            border-radius:10px;
+            color:#000;
+            padding:5px 10px;
+            text-align: left;
+        }
+        .btalk{
+            margin:10px;
+            text-align:right;
+        }
+        .btalk span{
+            display:inline-block;
+            background:#E7FFFF;
+            border-radius:10px;
+            color:#000;
+            padding:5px 10px;
+        }
+
+        .transcribe-box {
+              text-align: center;
+              margin: 10px;
+        }
+        #transcript {
+            width: 500px;
+        }
+</style>
+
+</head>
+<body>
+<div class="split left">
+  <!-- <div class="centered"> -->
+    <div class="talk_con">
+        <div class="talk_show" id="words">
+            <div class="atalk"><span id="asay">Hi! What can I help you?</span></div>
+        </div>
+        <div class="talk_input">
+            <input type="text" class="talk_word" id="talkwords">
+            <input type="button" value="send" class="talk_sub" id="talksub">
+        </div>
+    </div>
+    <div id="error" class="isa_error"></div>
+     <div class="transcribe-box">
+    <textarea id="transcript" placeholder="Press Start and speak into your mic" rows="5"
+    readonly="readonly"></textarea>
+    <div class="row">
+        <div class="col">
+            <button id="start-button" class="button-xl" title="Start Transcription">
+                <i class="fa fa-microphone"></i> Start
+            </button>
+            <button id="stop-button" class="button-xl" title="Stop Transcription" disabled="true"><i
+                    class="fa fa-stop-circle"></i> Stop
+            </button>
+            <button id="reset-button" class="button-xl button-secondary" title="Clear Transcript"> 
+                Clear Transcript
+            </button>
+            <button id="tranSearch" class="button-xl button-secondary" title="search"> 
+                Search
+            </button>
+        </div>
+        </div>
+    <!-- </div> -->
+</div>
+
+<div class="split right">
+   <a href="" >Submit your property</a>
+   <div id="welcome">
+      <img src="./assets/img/page-header.jpg"/>
+    </div>
+    <div id="showProperty" style="display: none;">
+      <div class="content-area single-property">
+            <div class="container">   
+
+                <div class="clearfix padding-top-40" >
+                        <div class="single-property-wrapper">
+                            <div class="single-property-header">                                          
+                                <span class="property-title pull-left" id="propertyN"></span>
+                                <span class="property-price pull-right" id="moneySpan">$825,000</span>
+                            </div>
+                            <div class="imgshow" >
+                              <img id="propertyImg" src="" />
+                            </div>
+                            <div id="map_canvas">
+                              <p>test</p>
+                            </div>
+                            <div class="property-meta entry-meta clearfix ">   
+                                <div class="col-xs-6 col-sm-3 col-md-3 p-b-15">
+                                    <span class="property-info-icon icon-bed">
+                                        <img src="assets/img/icon/bed-orange.png">
+                                    </span>
+                                    <span class="property-info-entry">
+                                        <span class="property-info-label">Bedrooms</span>
+                                        <span class="property-info-value" id="bedroomSpan"></span>
+                                    </span>
+                                </div>
+                                <div class="col-xs-6 col-sm-3 col-md-3 p-b-15">
+                                    <span class="property-info-icon icon-bath">
+                                        <img src="assets/img/icon/os-orange.png">
+                                    </span>
+                                    <span class="property-info-entry">
+                                        <span class="property-info-label">Bathrooms</span>
+                                        <span class="property-info-value" id="bathSpan"></span>
+                                    </span>
+                                </div>
+                                <div class="col-xs-6 col-sm-3 col-md-3 p-b-15">
+                                    <span class="property-info icon-area">
+                                        <button id="contactButton"><img src="assets/img/icon/phone.png" height="30px" width="30px"/></button>
+                                    </span>
+                                    <span class="property-info-entry">
+                                        <span class="property-info-label">Contact</span>
+                                        
+                                    </span>
+                                    
+                                </div>
+
+                            </div>
+                            <!-- .property-meta -->
+
+                            <div class="section">
+                                <h4 class="s-property-title">Description</h4>
+                                <div class="s-property-content">
+                                    <p id="DescriptionP"></p>
+                                </div>
+                            </div>
+                            <!-- End description area  -->
+                            <div class="section property-features">      
+
+                                <h4 class="s-property-title">Features</h4>                            
+                                <ul id="appliancesUL">
+                                    
+                                </ul>
+
+                            </div>
+
+                     </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+  </div>
+
+
+ <script type="text/javascript" src="lib/axios/dist/axios.standalone.js"></script>
+    <script type="text/javascript" src="lib/CryptoJS/rollups/hmac-sha256.js"></script>
+    <script type="text/javascript" src="lib/CryptoJS/rollups/sha256.js"></script>
+    <script type="text/javascript" src="lib/CryptoJS/components/hmac.js"></script>
+    <script type="text/javascript" src="lib/CryptoJS/components/enc-base64.js"></script>
+    <script type="text/javascript" src="lib/url-template/url-template.js"></script>
+    <script type="text/javascript" src="lib/apiGatewayCore/sigV4Client.js"></script>
+    <script type="text/javascript" src="lib/apiGatewayCore/apiGatewayClient.js"></script>
+    <script type="text/javascript" src="lib/apiGatewayCore/simpleHttpClient.js"></script>
+    <script type="text/javascript" src="lib/apiGatewayCore/utils.js"></script>
+    <script type="text/javascript" src="apigClient.js"></script>
+    <script src="main.js"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAQOZgHTjAuWNrbYCIErEYiE9bodk9PJ6g&callback=nice"></script>
+</body>
+
+</html>
