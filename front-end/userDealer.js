@@ -2,7 +2,7 @@
  * This js is used for Cognito user auth and get user information
  */
 
-const identity_pool_id = "us-east-1:4adb0b09-ad94-4423-ba16-a1a3750d8e45";
+const identity_pool_id = "us-east-1:";
 const aws_region = 'us-east-1';
 
 current_user = {

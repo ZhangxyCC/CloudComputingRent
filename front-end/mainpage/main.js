@@ -1,6 +1,6 @@
 var apigClient = apigClientFactory.newClient({
-	accessKey: 'AKIAS7DTXGU5YMMQ3VXG',
-    secretKey: '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'
+	accessKey: '',
+    secretKey: ''
  });
 var Words = document.getElementById("words");
 var TalkWords = document.getElementById("talkwords");
